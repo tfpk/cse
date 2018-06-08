@@ -15,5 +15,5 @@ if [[ "${HOST}" = *"cse.unsw.edu.au" ]]; then
     source "${DIR}/autocomplete/autocomplete_local.sh"
     source "${DIR}/cse_local.sh"
 else
-    return 1
+    source "${DIR}/cse_remote.sh"
 fi

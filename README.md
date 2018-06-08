@@ -26,3 +26,20 @@ $ give cs1511 wk08_[TAB]
 $ give cs1511 wk08_example [TAB]
 file.c ... other_file.c
 ```
+
+To use the CSE machine simultaneously with yours:
+```bash
+$ ls
+local_file.c local_other_file.c ... home.c
+$ cse ls
+[will pause while SSH connection establishes]
+Documents Downloads ... MyHomeFolder
+$ cse ls ~/Documents
+[using the same SSH connection]
+remote_cse_file.txt ... another_remote_file.txt
+$ cse
+> echo "this is run remotely!"
+...
+> exit
+$ echo "back to normal machine"
+```
