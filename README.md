@@ -7,9 +7,9 @@ CSE is a set of command line utilities designed to make interfacing with the UNS
 ## Setup
 Setting it up is reasonably easy. 
 First, pull this repository. 
-Second, add the following to your `bashrc` or `zshrc`:
+Second, add the following to your `bashrc` or `zshrc` (the source file automatically decides if you are local or remote):
 ```bash
-export CSE="z5555555@login.cse.unsw.edu.au"
+export _CSE="z5555555@login.cse.unsw.edu.au"
 source ~/link/to/cse/cse_source.sh
 ```
 Third, if you haven't already, configure ssh keys.

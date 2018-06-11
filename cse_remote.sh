@@ -2,20 +2,20 @@ _CSE_SESSION_SOCKET="~/.ssh/cse_socket"
 _CSE_SESSION_WD="~"
 
 setup_cse_socket(){
-    ssh -MtNf -S $_CSE_SESSION_SOCKET $CSE
+    ssh -MtNf -S $_CSE_SESSION_SOCKET $_CSE
 }
 
 send_cse_file(){
-    scp -o "ControlPath=${_CSE_SESSION_SOCKET}" $1 $CSE:$_CSE_SESSION_WD/$1
+    scp -o "ControlPath=${_CSE_SESSION_SOCKET}" $1 $_CSE:$_CSE_SESSION_WD/$1
 }
 
 send_cse_command(){
-    ssh -S $_CSE_SESSION_SOCKET -o LogLevel=QUIET $CSE "$@"
+    ssh -S $_CSE_SESSION_SOCKET -o LogLevel=QUIET $_CSE "$@"
 }
 
 cse(){
     local arg_path
-    if ! ssh -S $_CSE_SESSION_SOCKET -O check $CSE &> /dev/null ; then
+    if ! ssh -S $_CSE_SESSION_SOCKET -O check $_CSE &> /dev/null ; then
         setup_cse_socket
     elif [ "$1" = "exit" ]; then
         end_cse
@@ -37,5 +37,5 @@ cse(){
 }
 
 end_cse(){
-    ssh -O exit -S $_CSE_SESSION_SOCKET $CSE
+    ssh -O exit -S $_CSE_SESSION_SOCKET $_CSE
 }
