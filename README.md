@@ -27,6 +27,16 @@ $ give cs1511 wk08_example [TAB]
 file.c ... other_file.c
 ```
 
+To give a program silently:
+(Note, this feature is obviously not endorsed by CSE, and I may remove it if it's not allowed. 
+By using this program you are still bound by the terms of the `give` program.)
+```bash
+> gives cs1511 wk08_[TAB]
+> gives cs1511 wk08_example
+WARNING: ...
+...
+```
+
 To use the CSE machine simultaneously with yours:
 ```bash
 > ls

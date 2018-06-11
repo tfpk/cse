@@ -19,6 +19,7 @@ if [[ "${HOST}" = *"cse.unsw.edu.au" ]]; then
     IS_LOCAL=0
     source "${DIR}/autocomplete/autocomplete_local.sh"
     source "${DIR}/cse_local.sh"
+    source "${DIR}/give/give_local.sh"
 else
     source "${DIR}/cse_remote.sh"
 fi
