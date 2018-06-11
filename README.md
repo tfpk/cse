@@ -21,9 +21,9 @@ Setting it up is reasonably easy.
 ## Automatic
 If you use bash (the default on CSE machines), run this command:
 
-'''bash
+```bash
 > echo -n "zID [7 digits only]: z" && read zid && mkdir ~/.cse && cd ~/.cse && git clone https://github.com/tfpk/cse . && echo "export _CSE="z$zid@login.cse.unsw.edu.au"" >> ~/.bashrc && echo "source ~/.cse/cse_source.sh" >> ~/.bashrc && source ~/.bashrc && cd -
-'''
+```
 It will ask you for a zID. You should only enter numbers, you do not need to enter a `z`.
 
 If you want to uninstall/retry, run this command (make sure to copy it exactly!):
