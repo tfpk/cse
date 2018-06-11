@@ -12,7 +12,7 @@ Second, add the following to your `bashrc` or `zshrc` (the source file automatic
 export _CSE="z5555555@login.cse.unsw.edu.au"
 source ~/link/to/cse/cse_source.sh
 ```
-Third, if you haven't already, configure ssh keys.
+Third, if you haven't already, configure ssh keys. [This tutorial is a good guide for CSE computers](https://github.com/CallumHoward/cli-tools/blob/master/ssh_guide.md)
 
 # Usage
 (On a local machine, the `cse` part of the command can be left out. It must be left out for autocompletion)
