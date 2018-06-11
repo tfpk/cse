@@ -29,17 +29,29 @@ file.c ... other_file.c
 
 To use the CSE machine simultaneously with yours:
 ```bash
-$ ls
+> ls
 local_file.c local_other_file.c ... home.c
-$ cse ls
+> cse ls
 [will pause while SSH connection establishes]
 Documents Downloads ... MyHomeFolder
-$ cse ls ~/Documents
+> cse ls ~/Documents
 [using the same SSH connection]
 remote_cse_file.txt ... another_remote_file.txt
-$ cse
-> echo "this is run remotely!"
+> cse
+$ echo "this is run remotely!"
 ...
-> exit
-$ echo "back to normal machine"
+$ exit
+> echo "back to normal machine"
+```
+
+To transfer files while using `cse`, use the `^` (caret) directly before a filename as argument:
+```bash
+> ls
+my_file.sh  another_file.sh
+> cse cat my_file.sh
+# error, since my_file.sh doesn't exist
+> cse cat ^my_file.sh
+# Contents of my_file.sh
+> cse cat my_file.sh
+# Contents of my_file.sh
 ```
