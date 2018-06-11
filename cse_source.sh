@@ -4,7 +4,12 @@
     bashcompinit 2>/dev/null
 } || true
 
-DIR="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))"
+DIR=""
+if [ ! -z "${BASH_SOURCE[0]}" ]; then
+    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+else
+    DIR="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))"
+fi
 source "${DIR}/utils.sh"
 
 HOST="$(lower `hostname --long`)"
