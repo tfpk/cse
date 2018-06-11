@@ -42,6 +42,9 @@ $ echo "this is run remotely!"
 ...
 $ exit
 > echo "back to normal machine"
+...
+> cse exit
+# Will close cse connection gracefully.
 ```
 
 To transfer files while using `cse`, use the `^` (caret) directly before a filename as argument:
