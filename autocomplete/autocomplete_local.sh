@@ -3,6 +3,7 @@ _GIVE_COMPREPLY_LAST_CLASS=""
 _GIVE_COMPREPLY_CLS_CONFIG=""
 _GIVE_COMPREPLY_ASS_CONFIG=""
 _give(){
+    # Autocomplete method for give/gives
     local cur prev
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
