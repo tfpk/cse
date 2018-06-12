@@ -7,7 +7,9 @@ CSE is a set of command line utilities designed to make interfacing with the UNS
 1) Autocomplete `give` commands on local (i.e. CSE owned) machines.
 2) Run commands through `ssh` remotely, using the `cse` command.
 3) Run those commands in the context of a local terminal (you don't need to keep a seperate terminal for connecting to cse)
+    - Keep track of where on the CSE machine this "virtual SSH" is.
 4) Automatically transfer files to cse by using the `^` character at the start of arguments
+    - Files being replaced are backed up.
 
 ## Structure
 
@@ -16,7 +18,8 @@ Each module will eventually come in two parts:
 2) Remote: Runs on any computer with an internet connection.
 
 ## Setup
-Setting it up is reasonably easy. 
+Setting it up is possible in two ways. You can use a one-liner command, if you use bash; or add a few lines to your config file.
+Currently, only `zsh` and `bash` are officially supported (though `zsh` is recommended).
 
 ## Automatic
 If you use bash (the default on CSE machines), run this command:
@@ -32,6 +35,11 @@ If you want to uninstall/retry, run this command (make sure to copy it exactly!)
 > rm -rf ~/.cse/ && sed -i '/^export _CSE.*$/d' ~/.bashrc && sed -i '/source .*cse_source\.sh/d' ~/.bashrc
 ```
 
+To update it, run:
+```bash
+cd ~/.cse && git stash && git pull && source ~/.bashrc && cd -
+```
+
 ## Manual
 
 First, pull this repository (`git clone https://github.com/tfpk/cse`).
@@ -43,7 +51,7 @@ source ~/link/to/cse/cse_source.sh
 Third, if you haven't already, configure ssh keys. [This tutorial is a good guide for CSE computers](https://github.com/CallumHoward/cli-tools/blob/master/ssh_guide.md)
 
 # Usage
-(On a local machine, the `cse` part of the command can be left out. It must be left out for autocompletion)
+(On a local machine, the `cse` part of the command can be included or left out. It must be left out for autocompletion)
 
 To give a program, with autocomplete:
 ```bash
@@ -55,15 +63,14 @@ $ give cs1511 wk08_example [TAB]
 file.c ... other_file.c
 ```
 
-To give a program silently:
-(Note, this feature is obviously not endorsed by CSE, and I may remove it if it's not allowed. 
-By using this program you are still bound by the terms of the `give` program.)
+_DEPRECATED_: To give a program silently:
 ```bash
 > gives cs1511 wk08_[TAB]
 > gives cs1511 wk08_example
 WARNING: ...
 ...
 ```
+(This feature was removed by request of CSE).
 
 To use the CSE machine simultaneously with yours:
 ```bash
@@ -96,3 +103,15 @@ my_file.sh  another_file.sh
 > cse cat my_file.sh
 # Contents of my_file.sh
 ```
+
+To access backups in case of emergency (if you've accidentally overwritten a file):
+```bash
+> cse
+$ cd ~/.cse_backup/
+$ ls
+# List of all files moved
+# Find the file that you lost (files are named by the time they were uploaded and their name).
+$ mv ${my_file} ${new_location}
+```
+
+If you want to clear space by removing all backups, run `cse clean`
