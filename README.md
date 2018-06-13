@@ -108,10 +108,13 @@ To access backups in case of emergency (if you've accidentally overwritten a fil
 ```bash
 > cse
 $ cd ~/.cse_backup/
-$ ls
-# List of all files moved
+$ unzip backup.zip
+$ ls backup
+# List of all files
 # Find the file that you lost (files are named by the time they were uploaded and their name).
 $ mv ${my_file} ${new_location}
 ```
+
+Backups are temporary! Old backups are deleted after 60 minutes of no files being transferred.
 
 If you want to clear space by removing all backups, run `cse clean`

@@ -14,7 +14,7 @@ setup_cse_socket(){
 }
 
 get_remote_wd(){
-    # Connect to remote ssh server and get the "current directory" as reported by the _CSE_SESSION_BACKUP_PATH file.
+    # Connect to remote ssh server and get the "current directory" as reported by the _CSE_SESSION_WD_PATH file.
     # Args:
     #   None
     # Echoes:
@@ -29,21 +29,41 @@ get_remote_wd(){
     fi
 }
 
+backup_cse_file(){
+    # Backup file if it exists on remote.
+    # Args:
+    #   $1: The path to a file to backup on remote (including file name).
+    # Echoes:
+    #   None
+    local backup_file_name cur_file_name cur_file_path
+    
+    cur_file_path="$1"
+    cur_file_name="$(basename $1)"
+    backup_file_name="${_CSE_SESSION_BACKUP_PATH}/$(date +%s)_${cur_file_name}"
+
+    send_cse_command "mkdir -p ${_CSE_SESSION_BACKUP_PATH}"
+
+    local command backup_zip
+    backup_zip="${_CSE_SESSION_BACKUP_PATH}/backup.zip"
+    command="test \`find ${backup_zip} -mmin +60\` && rm ${backup_zip};"
+    command+="[[ -f "${cur_file_path}" || -d "${cur_file_path}" ]] && mv "${cur_file_path}" "${backup_file_name}" &&"
+    command+="zip -ur ${backup_zip} ${backup_file_name} 2>&1 >> ${_CSE_SESSION_BACKUP_PATH}/compress.log && rm -r ${backup_file_name}"
+    send_cse_command "$command"
+}
+
 send_cse_file(){
     # Backup file if it exists on remote, then scp the local file to replace it
     # Args:
     #   $1: The name of a file to move
     # Echoes:
     #   None
-    local new_file_name old_file_name remote_wd
-    remote_wd="$(get_remote_wd)"
-    backup_file_name="${_CSE_SESSION_BACKUP_PATH}/$(date +%s)_$1"
-    scp_file_name="${remote_wd}/$1"
-
-    send_cse_command "mkdir -p ${_CSE_SESSION_BACKUP_PATH}"
-    send_cse_command "[[ -f "${scp_file_name}" ]] && mv "${scp_file_name}" "${backup_file_name}""
+    local scp_file_name
+    scp_file_name="$(get_remote_wd)/$1"
+    
+    backup_cse_file "${scp_file_name}"
 
     scp -r -o "ControlPath=${_CSE_SESSION_SOCKET}" $1 $_CSE:"${scp_file_name}"
+    echo ""
 }
 
 wrap_cse_command(){
